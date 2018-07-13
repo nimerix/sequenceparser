@@ -14,6 +14,7 @@ set_target_properties(sequenceparser-static PROPERTIES OUTPUT_NAME sequenceParse
 target_include_directories(sequenceparser-static PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${Boost_INCLUDE_DIRS})
 target_link_libraries(sequenceparser-static ${Boost_LIBRARIES})
 
+if(BUILD_SHARED_LIBS)
 # Create 'sequenceparser' shared lib
 add_library(sequenceparser-shared SHARED ${SEQUENCEPARSER_SRC_FILES})
 set_target_properties(sequenceparser-shared PROPERTIES LINKER_LANGUAGE CXX)
@@ -22,6 +23,7 @@ set_target_properties(sequenceparser-shared PROPERTIES SOVERSION ${SEQUENCEPARSE
 set_target_properties(sequenceparser-shared PROPERTIES VERSION ${SEQUENCEPARSER_VERSION})
 target_include_directories(sequenceparser-shared PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${Boost_INCLUDE_DIRS})
 target_link_libraries(sequenceparser-shared ${Boost_LIBRARIES})
+endif(BUILD_SHARED_LIBS)
 
 ### Install sequenceParser libs and include
 install(
@@ -33,8 +35,12 @@ install(
 	PATTERN "*.i"
 )
 install(TARGETS sequenceparser-static DESTINATION lib/ OPTIONAL)
-install(TARGETS sequenceparser-shared DESTINATION lib/ OPTIONAL)
 
+if(BUILD_SHARED_LIBS)
+install(TARGETS sequenceparser-shared DESTINATION lib/ OPTIONAL)
+endif()
+
+if(WITH_SWIG)
 ### SWIG
 find_package(SWIG)
 if(SWIG_FOUND)
@@ -144,3 +150,4 @@ else(SWIG_FOUND)
 	message("SWIG not found, will not build python and java bindings.")
 
 endif(SWIG_FOUND)
+endif(WITH_SWIG)

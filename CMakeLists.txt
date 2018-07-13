@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 
 project(sequenceParser)
 
+option(WITH_SWIG "Use SWIG" OFF)
+option(BUILD_SHARED_LIBS "build shared SequenceParser libraries" OFF)
 # Get SequenceParser versions
 # SEQUENCEPARSER_VERSION_MAJOR
 # SEQUENCEPARSER_VERSION_MINOR
@@ -33,8 +35,8 @@ set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY TRUE)
 
 # CPP flags on debug / release mode
 if(MSVC)
-	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+	#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+	#set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 else()
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -fPIC -g")
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fPIC -O3")
